@@ -1,12 +1,11 @@
 var mongoose = require('mongoose');
 
 var Champion = mongoose.model('Champion', {
-  championId: Number,
+  id: Number,
   title: String,
   name: String,
-  image: String,
-  icon: String,
-  difficulty: String
+  key: String,
+  info: Object
 });
 
 module.exports = {Champion};
