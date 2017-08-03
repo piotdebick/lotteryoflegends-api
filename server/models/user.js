@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
+const axios = require('axios');
 
 var UserSchema = new mongoose.Schema({
   username: {
@@ -16,6 +17,11 @@ var UserSchema = new mongoose.Schema({
     required: true,
     minlength: 6
   },
+  region: {
+    type: String,
+    required: true,
+    minlength: 2
+  },
   tokens: [{
     access: {
       type: String,
@@ -27,6 +33,7 @@ var UserSchema = new mongoose.Schema({
     }
   }]
 });
+
 
 UserSchema.methods.toJSON = function () {
   var user = this;
