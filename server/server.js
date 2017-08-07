@@ -7,16 +7,19 @@ const bodyParser = require('body-parser');
 var app = express();
 const port = process.env.PORT || 3000;
 
-var {getAllChamps} = require('./jobs/freeWeekChamps.js');
+var {getAllChamps, getFreeChamps} = require('./jobs/schedule.js');
 var pickRoute = require('./routes/pickRoute');
 var userRoute = require('./routes/userRoute');
-var randomCodeRoute = require('./routes/randomCodeRoute');
+var champsRoute = require('./routes/champsRoute');
+var codeRoute = require('./routes/codeRoute');
 
-//getAllChamps();
+// getAllChamps();
+// getFreeChamps();
 app.use(bodyParser.json());
 app.use('/pick', pickRoute);
 app.use('/users', userRoute);
-app.use('/code', randomCodeRoute.router);
+app.use('/code', codeRoute.router);
+app.use('/champs', champsRoute);
 
 
 //app.use(express.static('public'));

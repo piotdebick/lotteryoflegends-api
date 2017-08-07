@@ -2,7 +2,7 @@ const _ = require('lodash');
 const axios = require('axios');
 const keys = require('./../config/keys');
 const api_key = keys.league_key;
-const {randomCode} = require('./../routes/randomCodeRoute');
+const {randomCode} = require('./../routes/codeRoute');
 
 var verifyUser = async (req, res, next) => {
   var body = _.pick(req.body, ['username', 'region']);
