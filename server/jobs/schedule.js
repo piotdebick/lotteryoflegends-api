@@ -25,7 +25,7 @@ var getAllChamps = async () => {
       await champion.save();
     }
   } catch (e) {
-    console.log(e.response.status);
+    console.log(e.response);
   }
 }
 
@@ -47,8 +47,8 @@ var getFreeChamps = async () => {
 }
 
 var tuesdayUpdate = schedule.scheduleJob('* * * * 2', () => {
-  getAllChamps();
-  getFreeChamps();
+  // getAllChamps();
+  // getFreeChamps();
 })
 
 module.exports = {getAllChamps, getFreeChamps};
