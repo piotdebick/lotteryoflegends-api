@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 
 var app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 var {getAllChamps, getFreeChamps} = require('./jobs/schedule.js');
 var pickRoute = require('./routes/pickRoute');
