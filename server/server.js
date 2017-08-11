@@ -13,8 +13,8 @@ var userRoute = require('./routes/userRoute');
 var champsRoute = require('./routes/champsRoute');
 var codeRoute = require('./routes/codeRoute');
 
-// getAllChamps();
-// getFreeChamps();
+getAllChamps();
+getFreeChamps();
 app.use(bodyParser.json());
 app.use('/pick', pickRoute);
 app.use('/users', userRoute);

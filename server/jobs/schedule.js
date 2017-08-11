@@ -46,9 +46,9 @@ var getFreeChamps = async () => {
   }
 }
 
-var tuesdayUpdate = schedule.scheduleJob('* * * * 2', () => {
+var wednesdayUpdate = schedule.scheduleJob('* * * * 3', () => {
   // getAllChamps();
   // getFreeChamps();
-})
+});
 
 module.exports = {getAllChamps, getFreeChamps};
