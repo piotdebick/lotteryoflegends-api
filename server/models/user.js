@@ -82,7 +82,7 @@ UserSchema.statics.findByToken = function (token) {
 
 
 UserSchema.statics.findByCredentials = function(username, password) {
-  var user = this;
+  var User = this;
 
   return User.findOne({username}).then((user) => {
     if(!user){

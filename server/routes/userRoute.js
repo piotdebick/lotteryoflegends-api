@@ -47,19 +47,21 @@ router.post('/login', async (req, res) => {
 // /users/me/token
 router.post('/me/token', authenticate, async (req, res) => {
   try{
-    await req.user.removeToken(req.token);
-    res.status(200).send();
+    var user = await User.findByToken(req.header('x-auth'));
+    res.header('x-auth', token).send(user);
   }catch (e) {
     res.status(400).send();
   }
 });
 
-router.delete('/me/token', authenticate, (req, res) => {
-  req.user.removeToken(req.token).then(() => {
+//logout
+router.delete('/me/token', authenticate, async (req, res) => {
+  try {
+    await req.user.removeToken(req.token);
     res.status(200).send();
-  }, () => {
+  } catch (e) {
     res.status(400).send();
-  });
+  }
 });
 
 module.exports = router;

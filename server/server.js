@@ -13,6 +13,17 @@ var userRoute = require('./routes/userRoute');
 var champsRoute = require('./routes/champsRoute');
 var codeRoute = require('./routes/codeRoute');
 
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, x-auth');
+    res.header('Access-Control-Expose-Headers', 'x-auth');
+    next();
+}
+
+
+app.use(allowCrossDomain);
+
 getAllChamps();
 getFreeChamps();
 app.use(bodyParser.json());

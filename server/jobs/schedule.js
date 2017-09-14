@@ -20,7 +20,7 @@ var getAllChamps = async () => {
     var champs = allChamps.data;
     //console.log(allChamps.data);
     for(var champ in champs){
-      const body = _.pick(champs[champ], ['id', 'title', 'name', 'key', 'info']);
+      const body = _.pick(champs[champ], ['id', 'title', 'name', 'key']);
       var champion = new Champion(body);
       await champion.save();
     }

@@ -2,11 +2,11 @@ var mongoose = require('mongoose');
 
 var Pick = mongoose.model('Pick', {
   championPicks: {
-    type: [Number],
+    type: Object,
     required: true
   },
   createdAt: {
-    type: Number,
+    type: String,
     default: null
   },
   _creator: {

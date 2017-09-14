@@ -5,6 +5,7 @@ const _ = require('lodash');
 const {mongoose} = require('../db/mongoose');
 const {Champion} = require('./../models/champion');
 const {Free} = require('./../models/free');
+var {authenticate} = require('../middleware/authenticate');
 
 //all champions
 router.get('/', async (req, res) => {
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
 
 });
 
-router.get('/free', async (req, res) => {
+router.get('/free', authenticate, async (req, res) => {
   try{
     const freeChamps = await Free.find({});
     var freeChampIds = freeChamps[0].championIds;

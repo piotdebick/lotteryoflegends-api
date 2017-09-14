@@ -7,7 +7,7 @@ const {randomCode} = require('./../routes/codeRoute');
 var verifyUser = async (req, res, next) => {
   var body = _.pick(req.body, ['username', 'region']);
   var username = body.username;
-  var region = body.region;
+  var region = 'na1';
   var errorMessage = "Make sure your information is correct!";
   var userRequestURL = `https://${region}.api.riotgames.com/lol/summoner/v3/summoners/by-name/${username}?api_key=${api_key}`;
 
