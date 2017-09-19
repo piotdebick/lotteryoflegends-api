@@ -1,3 +1,3 @@
 module.exports = {
-  "league_key": "RGAPI-b71bc311-6dd9-4560-a876-2f8cd68d0297"
+  "league_key": "RGAPI-33b1accf-d1ae-446b-a8d5-878abae43724"
 };

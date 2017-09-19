@@ -2,10 +2,11 @@ const _ = require('lodash');
 const axios = require('axios');
 const keys = require('./../config/keys');
 const api_key = keys.league_key;
-const {randomCode} = require('./../routes/codeRoute');
+var TempCode = require('../models/tempCode');
 
 var verifyUser = async (req, res, next) => {
-  var body = _.pick(req.body, ['username', 'region']);
+  var body = _.pick(req.body, ['username', 'region', 'code']);
+  var randomCode = await TempCode.findOne({code: body.code});
   var username = body.username;
   var region = 'na1';
   var errorMessage = "Make sure your information is correct!";
@@ -21,7 +22,6 @@ var verifyUser = async (req, res, next) => {
 
     var masteryRequestURL = `https://${region}.api.riotgames.com/lol/platform/v3/masteries/by-summoner/${userInfo.data.id}?api_key=${api_key}`;
     const masteryInfo = await axios.get(masteryRequestURL);
-
     var pages = masteryInfo.data.pages;
     if(pages[0].name === randomCode){
       next();

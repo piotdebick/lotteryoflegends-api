@@ -11,7 +11,7 @@ router.post('/', authenticate, async (req, res) => {
   //post picks to db
   var pick = new Pick({
     championPicks: req.body.championPicks,
-    createdAt: moment().toString(),
+    createdAt: moment().format('dddd, MMMM Do YYYY, h:mm:ss a'),
     _creator: req.body._creator
   });
   try{
@@ -22,10 +22,10 @@ router.post('/', authenticate, async (req, res) => {
   }
 });
 
-router.get('/', authenticate, async (req, res) => {
+router.get('/user/:userId', authenticate, async (req, res) => {
   //show picks
   try {
-    const picks = await Pick.find({_creator: req.body._creator});
+    const picks = await Pick.find({_creator: mongoose.Types.ObjectId(req.params.userId)}).sort({createdAt: -1}).limit(3);
     res.send({picks});
   } catch (e) {
     res.status(400).send(e)

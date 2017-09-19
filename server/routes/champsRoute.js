@@ -8,7 +8,7 @@ const {Free} = require('./../models/free');
 var {authenticate} = require('../middleware/authenticate');
 
 //all champions
-router.get('/', async (req, res) => {
+router.get('/', authenticate, async (req, res) => {
   try{
     const champions = await Champion.find({});
     res.send(champions);
