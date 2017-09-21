@@ -21,6 +21,10 @@ var UserSchema = new mongoose.Schema({
     required: true,
     minlength: 2
   },
+  submissions: {
+    type: Number,
+    required: true
+  },
   tokens: [{
     access: {
       type: String,

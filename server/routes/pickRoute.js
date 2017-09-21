@@ -5,6 +5,7 @@ var moment = require('moment');
 const {ObjectID} = require('mongodb');
 var {mongoose} = require('../db/mongoose');
 var {Pick} = require('../models/pick');
+var {User} = require('../models/user');
 var {authenticate} = require('../middleware/authenticate');
 
 router.post('/', authenticate, async (req, res) => {
@@ -15,8 +16,16 @@ router.post('/', authenticate, async (req, res) => {
     _creator: req.body._creator
   });
   try{
-    const doc = await pick.save();
-    res.send(doc);
+    var id = mongoose.Types.ObjectId(req.body._creator);
+    var user = await User.findOne({_id: id});
+    if(user.submissions < 1){
+      const doc = await pick.save();
+      await user.update({submissions: 1});
+      res.send(doc);
+    } else {
+      res.send('You have already posted a ticket this week');
+    }
+
   } catch (e) {
     res.status(400).send(e);
   }

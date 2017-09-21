@@ -17,6 +17,7 @@ express().use(bodyParser);
 router.post('/', verifyUser, async (req, res) => {
   try{
     const body = _.pick(req.body, ['username', 'password', 'region']);
+    body['submissions'] = 0;
     const user = new User(body);
     await user.save();
     const token = await user.generateAuthToken();
@@ -29,7 +30,8 @@ router.post('/', verifyUser, async (req, res) => {
 // /users/me
 //returns authenticated user
 router.get('/me', authenticate, (req, res) => {
-  res.send(req.user);
+  const body = _.pick(req.user, ['_id', 'username', 'region', 'submissions']);
+  res.send(body);
 });
 
 // /users/login
