@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const axios = require('axios');
-const schedule = require('node-schedule');
 const moment = require('moment');
 const {mongoose} = require('../db/mongoose');
 const {Free} = require('./../models/free');
@@ -60,8 +59,6 @@ const weeklyWinners = async () => {
   }
 }
 
-var winnersUpdate = schedule.scheduleJob('* 59 23 * 2', () => {
-   weeklyWinners();
-});
 
-module.exports = {winnersUpdate};
+
+module.exports = {weeklyWinners};

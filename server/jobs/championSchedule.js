@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const schedule = require('node-schedule');
 
 const {Champion} = require('./../models/champion');
 const {Free} = require('./../models/free');
@@ -46,9 +45,4 @@ var getFreeChamps = async () => {
   }
 }
 
-var championsUpdate = schedule.scheduleJob('* 20 59 * 2', () => {
-   getAllChamps();
-   getFreeChamps();
-});
-
-module.exports = {getAllChamps, getFreeChamps, championsUpdate};
+module.exports = {getAllChamps, getFreeChamps};
