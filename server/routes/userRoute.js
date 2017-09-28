@@ -16,8 +16,7 @@ express().use(bodyParser);
 //user sign up
 router.post('/', verifyUser, async (req, res) => {
   try{
-    const body = _.pick(req.body, ['username', 'password', 'region']);
-    body['submissions'] = 0;
+    const body = _.pick(req.body, ['username', 'password', 'region', 'summonerLevel', 'profileIconId', 'submissions']);
     const user = new User(body);
     await user.save();
     const token = await user.generateAuthToken();
@@ -30,7 +29,7 @@ router.post('/', verifyUser, async (req, res) => {
 // /users/me
 //returns authenticated user
 router.get('/me', authenticate, (req, res) => {
-  const body = _.pick(req.user, ['_id', 'username', 'region', 'submissions']);
+  const body = _.pick(req.user, ['username', '_id', 'region', 'summonerLevel', 'profileIconId', 'submissions']); 
   res.send(body);
 });
 

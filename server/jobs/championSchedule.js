@@ -14,8 +14,8 @@ var freeChampURL = `https://na1.api.riotgames.com/lol/platform/v3/champions?free
 
 var getAllChamps = async () => {
   try {
-    await Champion.remove({});
     const response = await axios.get(allChampURL);
+    await Champion.remove({});
     var allChamps = response.data;
     var champs = allChamps.data;
     //console.log(allChamps.data);
@@ -31,8 +31,8 @@ var getAllChamps = async () => {
 
 var getFreeChamps = async () => {
   try{
-    await Free.remove({});
     const response = await axios.get(freeChampURL);
+    await Free.remove({});
     var freeChamps = response.data;
     var champions = freeChamps.champions;
     var championIds = [];
@@ -46,9 +46,9 @@ var getFreeChamps = async () => {
   }
 }
 
-var wednesdayUpdate = schedule.scheduleJob('* * * * 3', () => {
-  // getAllChamps();
-  // getFreeChamps();
+var championsUpdate = schedule.scheduleJob('* 20 59 * 2', () => {
+   getAllChamps();
+   getFreeChamps();
 });
 
-module.exports = {getAllChamps, getFreeChamps};
+module.exports = {getAllChamps, getFreeChamps, championsUpdate};

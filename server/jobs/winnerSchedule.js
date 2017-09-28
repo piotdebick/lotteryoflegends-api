@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const axios = require('axios');
 const schedule = require('node-schedule');
+const moment = require('moment');
 const {mongoose} = require('../db/mongoose');
 const {Free} = require('./../models/free');
 const {Pick} = require('./../models/pick');
@@ -13,7 +14,15 @@ const weeklyWinners = async () => {
     await User.updateMany({}, {$set: {submissions: 0}});
     var freeChamps = await Free.find({});
     var freeChampIds = freeChamps[0].championIds;
-    var winners = await Pick.find({'championPicks.id': { $in : freeChampIds}});
+    var today = moment().endOf('day');
+    var sunday = moment(today).subtract(3, 'days');
+    var lastWeek = moment(sunday).subtract(7, 'days');
+    var winners = await Pick.find({
+      createdAt: {$ls: sunday.toDate(), $gt: lastWeek.toDate()},
+      'championPicks.id': { $in : freeChampIds}
+    });
+
+    //var winners = await Pick.find({'championPicks.id': { $in : freeChampIds}});
 
     var correctGuessedDocuments = [];
     for(var winner in winners) {
@@ -34,7 +43,6 @@ const weeklyWinners = async () => {
     });
 
     var topThreeWinners = byCorrect.slice(0,3);
-
     for(const summoner of topThreeWinners){
       var userID = mongoose.Types.ObjectId(summoner.summoner);
       var user = await User.find({_id: userID});
@@ -51,5 +59,9 @@ const weeklyWinners = async () => {
     console.log(e);
   }
 }
+
+var sundayUpdate = schedule.scheduleJob('* 59 23 * 7', () => {
+   weeklyWinners();
+});
 
 module.exports = {weeklyWinners};

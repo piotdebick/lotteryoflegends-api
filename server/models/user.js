@@ -21,6 +21,12 @@ var UserSchema = new mongoose.Schema({
     required: true,
     minlength: 2
   },
+  profileIconId: {
+    type: Number
+  },
+  summonerLevel: {
+    type: Number
+  },
   submissions: {
     type: Number,
     required: true
