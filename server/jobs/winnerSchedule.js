@@ -14,11 +14,11 @@ const weeklyWinners = async () => {
     await User.updateMany({}, {$set: {submissions: 0}});
     var freeChamps = await Free.find({});
     var freeChampIds = freeChamps[0].championIds;
-    var today = moment().endOf('day');
-    var sunday = moment(today).subtract(3, 'days');
-    var lastWeek = moment(sunday).subtract(7, 'days');
+    var today = moment();
+    var lastSunday = moment(today).subtract(3, 'days');
+    var lastMonday = moment(lastSunday).subtract(6, 'days');
     var winners = await Pick.find({
-      createdAt: {$ls: sunday.toDate(), $gt: lastWeek.toDate()},
+      createdAt: {$lt: lastSunday.endOf('day').toDate(), $gt: lastMonday.startOf('day').toDate()},
       'championPicks.id': { $in : freeChampIds}
     });
 
@@ -60,8 +60,8 @@ const weeklyWinners = async () => {
   }
 }
 
-var sundayUpdate = schedule.scheduleJob('* 59 23 * 7', () => {
+var winnersUpdate = schedule.scheduleJob('* 59 23 * 2', () => {
    weeklyWinners();
 });
 
-module.exports = {weeklyWinners};
+module.exports = {winnersUpdate};

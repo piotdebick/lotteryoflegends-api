@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 var app = express();
 const port = process.env.PORT || 3001;
 
-var {championsUpdate} = require('./jobs/championSchedule.js');
+var {getAllChamps, getFreeChamps} = require('./jobs/championSchedule.js');
 var {winnersUpdate} = require('./jobs/winnerSchedule.js');
 var pickRoute = require('./routes/pickRoute');
 var userRoute = require('./routes/userRoute');
@@ -25,7 +25,8 @@ var allowCrossDomain = function(req, res, next) {
 
 app.use(allowCrossDomain);
 
-championsUpdate();
+getAllChamps();
+getFreeChamps();
 winnersUpdate();
 app.use(bodyParser.json());
 app.use('/pick', pickRoute);
