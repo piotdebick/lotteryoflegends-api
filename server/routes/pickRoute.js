@@ -10,6 +10,9 @@ var {authenticate} = require('../middleware/authenticate');
 
 router.post('/', authenticate, async (req, res) => {
   //post picks to db
+  if(req.body.championPicks.length != 14){
+    throw new Error();
+  }
   var pick = new Pick({
     championPicks: req.body.championPicks,
     createdAt: moment().format('dddd, MMMM Do YYYY, h:mm:ss a'),
