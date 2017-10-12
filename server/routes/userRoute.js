@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 const _ = require('lodash');
-const bodyParser = require('body-parser');
 
 const {ObjectID} = require('mongodb');
 var {mongoose} = require('../db/mongoose');
@@ -10,7 +9,6 @@ var {User} = require('../models/user');
 var {authenticate} = require('../middleware/authenticate');
 var {verifyUser} = require('../middleware/verifyUser');
 
-express().use(bodyParser);
 
 // /users/
 //user sign up
@@ -29,7 +27,7 @@ router.post('/', verifyUser, async (req, res) => {
 // /users/me
 //returns authenticated user
 router.get('/me', authenticate, (req, res) => {
-  const body = _.pick(req.user, ['username', '_id', 'region', 'summonerLevel', 'profileIconId', 'submissions']); 
+  const body = _.pick(req.user, ['username', '_id', 'region', 'summonerLevel', 'profileIconId', 'submissions']);
   res.send(body);
 });
 
@@ -41,7 +39,7 @@ router.post('/login', async (req, res) => {
     const token = await user.generateAuthToken();
     res.header('x-auth', token).send(user);
   } catch (e) {
-    res.status(400).send();
+    res.status(400).send(e);
   }
 });
 
@@ -51,7 +49,7 @@ router.post('/me/token', authenticate, async (req, res) => {
     var user = await User.findByToken(req.header('x-auth'));
     res.header('x-auth', token).send(user);
   }catch (e) {
-    res.status(400).send();
+    res.status(400).send(e);
   }
 });
 
