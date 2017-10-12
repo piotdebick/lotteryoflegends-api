@@ -17,13 +17,13 @@ var codeRoute = require('./routes/codeRoute');
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type, x-auth');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, x-auth');
     res.header('Access-Control-Expose-Headers', 'x-auth');
     next();
 }
 
 
-app.use(allowCrossDomain);
+
 
 var championsUpdate = schedule.scheduleJob('* 20 59 * 2', () => {
    getAllChamps();
@@ -38,6 +38,7 @@ getAllChamps();
 getFreeChamps();
 
 app.use(bodyParser.json());
+app.use(allowCrossDomain);
 app.use('/pick', pickRoute);
 app.use('/users', userRoute);
 app.use('/code', codeRoute.router);
