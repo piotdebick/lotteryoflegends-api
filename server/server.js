@@ -15,7 +15,7 @@ var champsRoute = require('./routes/champsRoute');
 var codeRoute = require('./routes/codeRoute');
 
 var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Origin', "https://www.lotteryoflegends.com");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, x-auth');
     res.header('Access-Control-Expose-Headers', 'x-auth');
